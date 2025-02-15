@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #product_name {
+            padding: 10px;
+            width: 250px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        #status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h4 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .product-card p {
+            font-size: 14px;
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .product-card .price {
+            font-size: 16px;
+            color: #ff5722;
+            font-weight: bold;
+        }
+
+        .product-card .old-price {
+            font-size: 14px;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .product-card .discount {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .product-card .special-offer {
+            font-size: 14px;
+            color: #ff9800;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .product-card .stock {
+            font-size: 14px;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+
+        .product-card .view-details {
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .product-card .view-details:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+    <script>
+        function searchProducts() {
+            let product_name = document.getElementById("product_name").value;
+            if (!product_name) {
+                alert("Please enter a product name");
+                return;
+            }
+
+            document.getElementById("status").innerText = "Scraping in progress...";
+            fetch("/search", {
+                method: "POST",
+                body: new URLSearchParams({ "product_name": product_name }),
+                headers: { "Content-Type": "application/x-www-form-urlencoded" }
+            }).then(response => response.json()).then(data => {
+                if (data.status) {
+                    document.getElementById("status").innerText = data.status;
+                    setTimeout(fetchProducts, 5000);  // Start polling after 5 sec
+                }
+            });
+        }
+
+        function fetchProducts() {
+            fetch("/get_products")
+            .then(response => response.json())
+            .then(data => {
+                let container = document.getElementById("results");
+                container.innerHTML = "";
+                let hasProducts = false;
+
+                for (let platform in data) {
+                    let products = data[platform];
+                    if (products && products.length > 0) {
+                        hasProducts = true;
+                        let div = document.createElement("div");
+                        div.innerHTML = `<h3 style="text-align:center; font-size:24px; color:#333;">${platform.toUpperCase()}</h3>`;
+                        let productContainer = document.createElement("div");
+                        productContainer.className = "product-container";
+
+                        products.forEach(product => {
+                            productContainer.innerHTML += `
+                                <div class="product-card">
+                                    <img src="${product.image_url}" alt="${product.name}">
+                                    <h4><a href="${product.product_url}" target="_blank">${product.name}</a></h4>
+                                    <p class="price">₹${product.new_price}</p>
+                                    <p class="old-price">₹${product.old_price}</p>
+                                    <p class="discount">${product.discount}</p>
+                                    <p><strong>Weight:</strong> ${product.weight}</p>
+                                    <p class="stock"><strong>In Stock:</strong> ${product.in_stock}</p>
+                                    ${product.special_offer ? `<p class="special-offer"><strong>Special Offer:</strong> ${product.special_offer}</p>` : ''}
+                                    <a href="${product.product_url}" target="_blank" class="view-details">View Details</a>
+                                </div>
+                            `;
+                        });
+                        div.appendChild(productContainer);
+                        container.appendChild(div);
+                    }
+                }
+
+                if (!hasProducts) {
+                    setTimeout(fetchProducts, 3000);  // Retry in 3 sec if no data yet
+                } else {
+                    document.getElementById("status").innerText = "Scraping complete!";
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Product Search</h1>
+    <div class="search-container">
+        <input type="text" id="product_name" placeholder="Enter product name">
+        <button onclick="searchProducts()">Search</button>
+    </div>
+    <p id="status" style="text-align:center; font-size:18px;"></p>
+    <div id="results"></div>
+</body>
+</html>
