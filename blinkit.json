@@ -77,6 +77,17 @@
     "special_offer": null
   },
   {
+    "name": "Mille Sama Kutki/Little Millet",
+    "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/06c22af2-443e-4675-9684-83afe9890ed8.jpg?ts=1733314650",
+    "product_url": "https://blinkit.com/prn/mille-sama-kutkilittle-millet/prid/591268",
+    "weight": "500 g",
+    "new_price": 151.0,
+    "old_price": 205.0,
+    "discount": "26%",
+    "in_stock": "Yes",
+    "special_offer": null
+  },
+  {
     "name": "Manna Ethnic Samak/Barnyard Millet (Samak)",
     "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/app/assets/products/sliding_images/jpeg/3eeeaa1f-073c-4d5e-8161-0d09710fb82d.jpg?ts=1713777261",
     "product_url": "https://blinkit.com/prn/manna-ethnic-samakbarnyard-millet-samak/prid/500554",
@@ -106,6 +117,17 @@
     "new_price": 86.0,
     "old_price": 120.0,
     "discount": "28%",
+    "in_stock": "Yes",
+    "special_offer": null
+  },
+  {
+    "name": "Mille Kodra/Kodo Millet",
+    "image_url": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=270/da/cms-assets/cms/product/1c3d86e5-f967-4b48-8ed4-6bce6f3e05d5.jpg?ts=1733314658",
+    "product_url": "https://blinkit.com/prn/mille-kodrakodo-millet/prid/591270",
+    "weight": "500 g",
+    "new_price": 151.0,
+    "old_price": 205.0,
+    "discount": "26%",
     "in_stock": "Yes",
     "special_offer": null
   },

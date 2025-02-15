@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <style>
+        :root {
+            --primary-color: #03750d;
+            --secondary-color: #179c05;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --swiggy-orange: #fc8019;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-primary);
+        }
+        .center-button {
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        }
+
+        button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+        background-color: #45a049;
+        }
+
+        button[type="submit"]:active {
+        background-color: #3e8e41;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem 1rem;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .platform-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .platform-section h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-background);
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 1rem 0;
+            color: var(--text-primary);
+        }
+
+        .product-details {
+            display: grid;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .discount {
+            color: #059669;
+            font-weight: 500;
+        }
+
+        .stock {
+            font-size: 0.875rem;
+        }
+
+        .in-stock {
+            color: #059669;
+        }
+
+        .select-checkbox {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border-radius: 50%;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .select-checkbox input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+        .delivery-time {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--swiggy-orange);
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .delivery-time img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .no-discount {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-style: italic;
+        }
+
+        .weight {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .advertisement-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background-color: var(--swiggy-orange);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Select Your Products</h1>
+    </header>
+
+    <form action="/submit_selected_products" method="POST">
+        {% for platform, products in all_products.items() %}
+            {% if products and products|length > 0 %}
+                <section class="platform-section">
+                    <h3>{{ platform.capitalize() }}</h3>
+                    <div class="product-grid">
+                        {% for product in products %}
+                            <div class="product-card">
+                                {% if product.is_advertisement %}
+                                    <div class="advertisement-badge">Ad</div>
+                                {% endif %}
+        
+                                <div class="select-checkbox">
+                                    <input type="checkbox" 
+                                           name="selected_products" 
+                                           value="{{ product.name }}|{{ product.new_price if product.new_price else product.old_price }}|{{ product.discount }}|{{ product.weight }}|{{ product.delivery_time }}|{{ product.in_stock }}"
+                                           id="product-{{ product.name }}">
+                                </div>
+        
+                
+        
+                                <div class="product-info">
+                                    <h4 class="product-name">{{ product.name }}</h4>
+                                    
+                                    <div class="product-details">
+                                        <div class="detail-item">
+                                            <span>Price</span>
+                                            <span class="product-price">
+                                                {% if product.new_price %}
+                                                    ₹{{ product.new_price }}
+                                                {% elif product.old_price %}
+                                                    ₹{{ product.old_price }}
+                                                {% else %}
+                                                    Price not available
+                                                {% endif %}
+                                            </span>
+                                        </div>
+        
+                                        {% if product.discount and product.discount != "No discount" %}
+                                        <div class="detail-item">
+                                            <span>Discount</span>
+                                            <span class="discount">{{ product.discount }}</span>
+                                        </div>
+                                        {% endif %}
+        
+                                        {% if product.delivery_time %}
+                                        <div class="delivery-time">
+                                            <img src="https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_24/Split%20cart/Bolt%20Icon%20for%20SLA%20(10_10).png" alt="delivery">
+                                            {{ product.delivery_time }}
+                                        </div>
+                                        {% endif %}
+        
+                                        {% if product.weight %}
+                                        <div class="weight">
+                                            {{ product.weight }}
+                                        </div>
+                                        {% endif %}
+        
+                                        <div class="detail-item">
+                                            <span>Availability</span>
+                                            <span class="stock {% if product.in_stock %}in-stock{% endif %}">
+                                                {{ 'In Stock' if product.in_stock else 'Out of Stock' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            {% endif %}
+        {% endfor %}
+    
+        <div class="center-button">
+            <button type="submit">View Dashboard</button>
+          </div>
+          
+    </form>
+    
+</body>
+</html>

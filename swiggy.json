@@ -1,7 +1,7 @@
 [
   {
     "name": "Millé Mille Chocolate Oatmeal with Fruit & Nuts Trial Pack of 3",
-    "image_url": "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_24/Split%20cart/Bolt%20Icon%20for%20SLA%20(10_10).png",
+    "image_url": "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_252,h_272/NI_CATALOG/IMAGES/CIW/2024/9/10/802f4d02-2453-450f-a335-da3073c52d7d_128811_1.png",
     "discount": "No discount",
     "delivery_time": "4 mins",
     "weight": "150 g",
@@ -11,7 +11,7 @@
     "is_advertisement": true,
     "category": "millet",
     "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 19:01:00"
+    "scraped_at": "2025-02-15 23:28:23"
   },
   {
     "name": "24 Mantra Organic Samak/Barnyard Millet",
@@ -25,7 +25,7 @@
     "is_advertisement": false,
     "category": "millet",
     "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 19:01:02"
+    "scraped_at": "2025-02-15 23:28:26"
   },
   {
     "name": "24 Mantra Organic Bajra Flour Pearl Millet Flour Sajjalu",
@@ -39,6 +39,6 @@
     "is_advertisement": false,
     "category": "millet",
     "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 19:01:03"
+    "scraped_at": "2025-02-15 23:28:27"
   }
 ]

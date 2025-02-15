@@ -19,6 +19,25 @@
             color: white;
         }
 
+        .navbar {
+            background-color: #4CAF50;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px;
+        }
+
+        .navbar a:hover {
+            background-color: #45a049;
+            border-radius: 4px;
+        }
+
         .search-container {
             text-align: center;
             margin-top: 30px;
@@ -127,6 +146,21 @@
             background-color: #45a049;
         }
 
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            margin-top: 30px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
     </style>
     <script>
         function searchProducts() {
@@ -196,6 +230,13 @@
     </script>
 </head>
 <body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/products">View Products</a>
+    </div>
+
     <h1>Product Search</h1>
     <div class="search-container">
         <input type="text" id="product_name" placeholder="Enter product name">
@@ -203,5 +244,9 @@
     </div>
     <p id="status" style="text-align:center; font-size:18px;"></p>
     <div id="results"></div>
+
+    <!-- Button to Navigate to Products Page -->
+    <a href="/products" class="button">Go to Products</a>
+
 </body>
 </html>

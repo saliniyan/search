@@ -70,6 +70,14 @@ def scroll_to_load_products(driver):
             break
         previous_height = len(product_cards)
 
+def get_weight(card):
+    """Extract the weight of the product."""
+    try:
+        weight_element = card.find_element(By.CSS_SELECTOR, "span.PackChanger___StyledLabel-sc-newjpv-1")
+        return weight_element.text.strip()
+    except:
+        return None
+    
 def scrape_bigbasket_products(product_name):
     driver = setup_driver()
     products = []
@@ -94,7 +102,7 @@ def scrape_bigbasket_products(product_name):
             print("No products available.")
             return []
 
-        for card in product_cards[:40]:  # Scraping only first 40 products
+        for card in product_cards[:20]:  # Scraping only first 40 products
             try:
                 new_price, old_price = extract_price_info(card)
                 product = {
@@ -108,7 +116,8 @@ def scrape_bigbasket_products(product_name):
                     'discount': extract_discount(card),
                     'pack_size': None,
                     'special_offer': None,
-                    'product_url': None
+                    'product_url': None,
+                    'weight': get_weight(card)  # Add weight here
                 }
 
                 try:
@@ -129,7 +138,8 @@ def scrape_bigbasket_products(product_name):
                 product.update(get_ratings_info(card))
                 products.append(product)
 
-            except:
+            except Exception as e:
+                print(f"Error scraping product: {e}")
                 continue
 
     except Exception as e:
