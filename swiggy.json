@@ -1,44 +1,58 @@
 [
   {
-    "name": "Millé Mille Chocolate Oatmeal with Fruit & Nuts Trial Pack of 3",
-    "image_url": "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_252,h_272/NI_CATALOG/IMAGES/CIW/2024/9/10/802f4d02-2453-450f-a335-da3073c52d7d_128811_1.png",
+    "name": "Dabur Hommade Tomato Puree",
+    "image_url": "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_252,h_272/ketlbrpratmnyvd5d8oy",
     "discount": "No discount",
     "delivery_time": "4 mins",
-    "weight": "150 g",
+    "weight": "200 g",
     "new_price": null,
-    "old_price": 147.0,
+    "old_price": 27.0,
     "in_stock": "Yes",
     "is_advertisement": true,
-    "category": "millet",
-    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 23:28:23"
+    "category": "tomato",
+    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=tomato",
+    "scraped_at": "2025-02-16 02:06:08"
   },
   {
-    "name": "24 Mantra Organic Samak/Barnyard Millet",
+    "name": "Maggi Rich Tomato Ketchup",
+    "image_url": "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_24/Split%20cart/Bolt%20Icon%20for%20SLA%20(10_10).png",
+    "discount": "No discount",
+    "delivery_time": "4 mins",
+    "weight": "485 g",
+    "new_price": null,
+    "old_price": 115.0,
+    "in_stock": "Yes",
+    "is_advertisement": false,
+    "category": "tomato",
+    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=tomato",
+    "scraped_at": "2025-02-16 02:06:11"
+  },
+  {
+    "name": "Kissan Fresh Tomato Ketchup",
     "image_url": "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_24/Split%20cart/Bolt%20Icon%20for%20SLA%20(10_10).png",
     "discount": "No discount",
     "delivery_time": "4 mins",
     "weight": "500 g",
     "new_price": null,
-    "old_price": 150.0,
+    "old_price": 120.0,
     "in_stock": "Yes",
     "is_advertisement": false,
-    "category": "millet",
-    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 23:28:26"
+    "category": "tomato",
+    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=tomato",
+    "scraped_at": "2025-02-16 02:06:12"
   },
   {
-    "name": "24 Mantra Organic Bajra Flour Pearl Millet Flour Sajjalu",
+    "name": "Maggi Hot & Sweet Chilli Tomato Sauce",
     "image_url": "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_24/Split%20cart/Bolt%20Icon%20for%20SLA%20(10_10).png",
     "discount": "No discount",
     "delivery_time": "4 mins",
-    "weight": "500 g",
+    "weight": "1 kg",
     "new_price": null,
-    "old_price": 65.0,
+    "old_price": 185.0,
     "in_stock": "Yes",
     "is_advertisement": false,
-    "category": "millet",
-    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=millet",
-    "scraped_at": "2025-02-15 23:28:27"
+    "category": "tomato",
+    "product_url": "https://www.swiggy.com/instamart/search?location=chennai&custom_back=true&query=tomato",
+    "scraped_at": "2025-02-16 02:06:12"
   }
 ]

@@ -115,6 +115,31 @@
             </div>
         </div>
     </div>
+    {% if recommended_products %}
+    <h3>Recommended Products</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Original Price (₹)</th>
+                <th>Discount (%)</th>
+                <th>Price per Unit (₹)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in recommended_products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>₹{{ "%.2f"|format(product.original_price) }}</td>
+                    <td>{{ "%.2f"|format(product.discount) }}%</td>
+                    <td>₹{{ "%.2f"|format(product.new_price) }} per {{ product.unit }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No recommended products available.</p>
+{% endif %}
 
     <a href="/" class="back-button">Go Back to Search</a>
 </body>

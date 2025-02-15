@@ -119,7 +119,7 @@ def submit_selected_products():
     selected_products_data = request.form.getlist('selected_products')
     
     if not selected_products_data:
-        return jsonify({"error": "No products selected"}), 400
+        return render_template("dashboard.html", selected_products=[], recommended_product=None, price_plot_html="", discount_plot_html="", stock_plot_html="")
     
     selected_products = []
     invalid_products = []
@@ -130,58 +130,64 @@ def submit_selected_products():
     unit_prices = []  # This will store the calculated unit prices for the dashboard
     discounts = []
     in_stock_counts = {"In Stock": 0, "Out of Stock": 0}
-
+    
+    # Recommendation criteria
+    recommended_product = None
+    
     # Process each product's data
     for product_data in selected_products_data:
         product_details = product_data.split('|')
         
         if len(product_details) >= 6:
-            # Calculate price per unit by dividing by weight
-            price = float(product_details[1].replace('₹', '').replace(',', ''))  # Clean price
-            weight_str = product_details[3]
-            weight = float(weight_str.split()[0])  # Get the numerical value of weight
-            unit = weight_str.split()[1] if len(weight_str.split()) > 1 else 'kg'  # Default to kg if no unit provided
-
-            # Calculate price per unit based on weight
-            price_per_unit = price / weight  # Price per kg or liter
-
-            product = {
-                "name": product_details[0],
-                "original_price": price,  # Store the original price here
-                "new_price": price_per_unit,  # Price per unit for the dashboard
-                "discount": 0,
-                "weight": weight,
-                "unit": unit,
-                "delivery_time": product_details[4],
-                "in_stock": product_details[5] == 'True'
-            }
-            
-            # Clean the discount string (remove '%' and 'OFF')
-            discount_str = product_details[2].replace('%', '').replace(',', '').strip()
-
-            # Check if the discount is valid (numeric or percentage)
             try:
-                # If the discount is 'No discount', set it to 0
-                if discount_str.lower() == 'no discount':
-                    product['discount'] = 0
-                else:
-                    product['discount'] = float(discount_str) if discount_str else 0
-            except ValueError:
-                product['discount'] = 0  # Default to 0 if the conversion fails
-            
-            selected_products.append(product)
+                # Calculate price per unit by dividing by weight
+                price = float(product_details[1].replace('₹', '').replace(',', ''))  # Clean price
+                weight_str = product_details[3]
+                weight = float(weight_str.split()[0]) if weight_str.split()[0].replace('.', '', 1).isdigit() else 1.0  # Default to 1.0 if invalid
+                unit = weight_str.split()[1] if len(weight_str.split()) > 1 else 'kg'  # Default to kg if no unit provided
 
-            # Add to plot data
-            product_names.append(product['name'])
-            prices.append(product['original_price'])  # Use the original price for the list
-            unit_prices.append(product['new_price'])  # Use unit price for the dashboard
-            discounts.append(product['discount'])
-            if product['in_stock']:
-                in_stock_counts["In Stock"] += 1
-            else:
-                in_stock_counts["Out of Stock"] += 1
+                # Calculate price per unit based on weight
+                price_per_unit = price / weight if weight > 0 else price  # Avoid division by zero
+
+                product = {
+                    "name": product_details[0],
+                    "original_price": price,  # Store the original price here
+                    "new_price": price_per_unit,  # Price per unit for the dashboard
+                    "discount": 0,
+                    "weight": weight,
+                    "unit": unit,
+                    "in_stock": product_details[5] == 'True'
+                }
+                
+                # Clean the discount string (remove '%' and 'OFF')
+                discount_str = product_details[2].replace('%', '').replace(',', '').strip()
+
+                # Check if the discount is valid (numeric or percentage)
+                product['discount'] = float(discount_str) if discount_str.replace('.', '', 1).isdigit() else 0
+                
+                selected_products.append(product)
+
+                # Add to plot data
+                product_names.append(product['name'])
+                prices.append(product['original_price'])  # Use the original price for the list
+                unit_prices.append(product['new_price'])  # Use unit price for the dashboard
+                discounts.append(product['discount'])
+                if product['in_stock']:
+                    in_stock_counts["In Stock"] += 1
+                else:
+                    in_stock_counts["Out of Stock"] += 1
+                
+                # Recommendation logic: Choose one product with the best discount or lowest price per unit
+                if recommended_product is None or (product['discount'] > recommended_product['discount']) or (product['discount'] == recommended_product['discount'] and product['new_price'] < recommended_product['new_price']):
+                    recommended_product = product
+            except ValueError:
+                invalid_products.append(product_data)
         else:
             invalid_products.append(product_data)
+    
+    # Ensure at least one product is recommended
+    if recommended_product is None and selected_products:
+        recommended_product = min(selected_products, key=lambda x: x['new_price'])
     
     # Create the plots
     price_plot = px.bar(
@@ -221,13 +227,13 @@ def submit_selected_products():
 
     # Render the dashboard with plots and product data
     return render_template(
-        "dashboard.html",
-        selected_products=selected_products,
-        price_plot_html=price_plot_html,
-        discount_plot_html=discount_plot_html,
-        stock_plot_html=stock_plot_html
-    )
-
+    "dashboard.html",
+    selected_products=selected_products,
+    recommended_products=[recommended_product] if recommended_product else [],  # Convert to a list
+    price_plot_html=price_plot_html,
+    discount_plot_html=discount_plot_html,
+    stock_plot_html=stock_plot_html
+)
 
 def get_product_by_id(product_id, data_paths):
     """Fetch product details from JSON files by product ID."""
